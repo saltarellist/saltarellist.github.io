@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+{% block title %}
+    New listing
+{% endblock %}
+
+{% block body %}
+    <h2 class="new-listing-header">What are you selling?</h2>
+    {% if user.is_authenticated %}
+        <div class="new-listing-form">
+            <form action="{% url 'new_listing' %}" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="new-form">
+                        <div class="new-form-label">
+                            <b>{{ field.label }}</b>
+                        </div> 
+                        <div class="new-form-value">
+                            {{ field }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="form-field">
+                    <input class="button" type="submit" value="Post ad">
+                </div>
+            </form>
+       </div>
+    {% else %}
+        <h5>Please <a  href="{% url 'login' %}">login</a> to list an item.</h5>
+    {% endif %}
+{% endblock %}
